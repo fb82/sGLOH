@@ -11,7 +11,7 @@
     <br>
     <em>HarrisZ+ and DoG + <b>sGLOH2</b> + Blob matching + DTM + RANSAC</em>
     <br>
-    <em>Fully handcrafted matching pipeline!</em>
+    <u>Fully handcrafted matching pipeline!</u>
   
 </p>
 
