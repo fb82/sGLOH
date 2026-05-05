@@ -38,13 +38,13 @@ if __name__ == "__main__":
         }
 
     # rotation mode is  sGOr2a
-    # rot_mode = {'refine around dominant'} 
+    rot_mode = {'refine around dominant'} 
     # or sGLOH2
     # rot_mode = {'best patch match'}
     # or upright with a fixed orientation
     # rot_mode = {'fixed': 1} # upright with fixed discrete rotation in [0, 15]
     # or just use SIFT for comparison
-    rot_mode = {'SIFT'}
+    # rot_mode = {'SIFT'}
     
     # matching
     matcher = {'Blob Matching'}
