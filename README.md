@@ -16,7 +16,7 @@
 </p>
 
 ## What is it?
-+ DTM is a non-deep spatial matching filter based on Delaunay triangulation, like [GMS](https://github.com/JiawangBian/GMS-Feature-Matcher) or [LPM](https://github.com/jiayi-ma/LPM?tab=readme-ov-file).
++ The shifting Gradient Orientation Local Histogram (sGLOH) descriptor is a SIFT-like descriptor where descriptor vectors on rotated patches are achieved by permutations of their elements, allowing several robust matching strategies according to the task.
 + The [original code](https://sites.google.com/view/fbellavia/research) was released in C, this is the Python implementation.
 
 ## Setup (including all the stuff to launch the demo)
@@ -41,7 +41,7 @@ python ./demo.py <path of 1st image> <path of the 2nd image>
 For further details or customizations please inspect the comments in ``demo.py``.
 
 ## Notes
-+ The demo uses DoG and [HarrisZ+](https://github.com/fb82/HarrisZ) keypoints and [Blob matching + DTM](https://github.com/fb82/DTM) to compute the matches. In case of OOM issues you can select only one kind of keypoints. By default Blob Matching runs on CPU to avoid OOM, but if you have enough memory you can try on GPU. The demo allows alternatively the usage of the standard MNN.
+The demo uses DoG and [HarrisZ+](https://github.com/fb82/HarrisZ) keypoints and [Blob matching + DTM](https://github.com/fb82/DTM) to compute the matches. In case of OOM issues you can select only one kind of keypoints. By default Blob Matching runs on CPU to avoid OOM, but if you have enough memory you can try on GPU. The demo allows alternatively the usage of the standard MNN.
 
 ## Where can I find more details?
 + [Rethinking the sGLOH descriptor](http://cvg.dsi.unifi.it/pdfs/sGLOH2_TPAMI.pdf) (TPAMI 2018)
