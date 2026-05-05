@@ -1,4 +1,4 @@
-<h1 align="center">🙈📐 sGLOH \& sGLOH2 descriptors 🖼️👀</h1>
+<h1 align="center">🎯🎭 sGLOH & sGLOH2 descriptors ⚙️🪛</h1>
 
 <p align="center">
   <h2 align="center"><p>
