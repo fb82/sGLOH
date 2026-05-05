@@ -17,7 +17,7 @@
 
 ## What is it?
 + DTM is a non-deep spatial matching filter based on Delaunay triangulation, like [GMS](https://github.com/JiawangBian/GMS-Feature-Matcher) or [LPM](https://github.com/jiayi-ma/LPM?tab=readme-ov-file).
-+ The [original code](https://sites.google.com/view/fbellavia/research/blob_dtm) was released in Matlab, this is the Python implementation.
++ The [original code](https://sites.google.com/view/fbellavia/research) was released in C, this is the Python implementation.
 
 ## Setup (including all the stuff to launch the demo)
 Run from the terminal
@@ -41,8 +41,8 @@ python ./demo.py <path of 1st image> <path of the 2nd image>
 For further details or customizations please inspect the comments in ``demo.py``.
 
 ## Notes
-+ The demo uses DoG and [HarrisZ+](https://github.com/fb82/HarrisZ) keypoints to compute the matches. In case of OOM issues you can select only one kind of keypoints.
-+ Blob matching is implemented in PyTorch. By default it runs on CPU to avoid OOM, but if you have enough memory you can try on GPU. The demo allows alternatively the usage of the standard MNN.
++ The demo uses DoG and [HarrisZ+](https://github.com/fb82/HarrisZ) keypoints and [Blob matching + DTM](https://github.com/fb82/DTM) to compute the matches. In case of OOM issues you can select only one kind of keypoints. By default Blob Matching runs on CPU to avoid OOM, but if you have enough memory you can try on GPU. The demo allows alternatively the usage of the standard MNN.
 
 ## Where can I find more details?
-See the paper [SIFT Matching by Context Exposed](https://arxiv.org/abs/2106.09584) (TPAMI 2022).
++ [Rethinking the sGLOH descriptor](http://cvg.dsi.unifi.it/pdfs/sGLOH2_TPAMI.pdf) (TPAMI 2018)
++ [Keypoint descriptor matching with context-based orientation estimation](https://www.researchgate.net/publication/262770174_Keypoint_descriptor_matching_with_context-based_orientation_estimation) (Image and Vision Computing 2014)
