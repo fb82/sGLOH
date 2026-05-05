@@ -10,6 +10,9 @@
     <img src="https://github.com/fb82/sGLOH/blob/main/data/DC_sGOr2a.jpg" alt="example" height=200>
     <br>
     <em>HarrisZ+ and DoG + <b>sGLOH2</b> + Blob matching + DTM + RANSAC</em>
+    <br>
+    <em>Fully handcrafted matching pipeline!</em>
+  
 </p>
 
 ## What is it?
