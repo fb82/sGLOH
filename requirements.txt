@@ -1,0 +1,14 @@
+# pip install -r requirements.txt
+# tested on Ubuntu 24.04.1 LTS and Python 3.12
+#
+# to run sGLOH
+numpy
+torch
+torchvision
+opencv-python
+opencv-contrib-python
+kornia-moons
+pillow
+# to run also the demo
+kornia
+matplotlib
