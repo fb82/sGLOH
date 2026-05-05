@@ -6,8 +6,8 @@
   </p></h2>
 
 <p align="center">
-    <img src="https://github.com/fb82/DTM/blob/main/data/out/ET.jpg" alt="example" height=200>
-    <img src="https://github.com/fb82/DTM/blob/main/data/out/DC.jpg" alt="example" height=200>
+    <img src="https://github.com/fb82/sGLOH/blob/main/data/ET_sGOr2a.jpg" alt="example" height=200>
+    <img src="https://github.com/fb82/sGLOH/blob/main/data/DC_sGOr2a.jpg" alt="example" height=200>
     <br>
     <em>HarrisZ+ and DoG + <b>sGLOH2</b> + Blob matching + DTM + RANSAC</em>
 </p>
