@@ -46,4 +46,4 @@ For further details or customizations please inspect the comments in ``demo.py``
 
 ## Where can I find more details?
 + [Rethinking the sGLOH descriptor](http://cvg.dsi.unifi.it/pdfs/sGLOH2_TPAMI.pdf) (TPAMI 2018)
-+ [Keypoint descriptor matching with context-based orientation estimation](https://www.researchgate.net/publication/262770174_Keypoint_descriptor_matching_with_context-based_orientation_estimation) (Image and Vision Computing 2014)
++ [Keypoint descriptor matching with context-based orientation estimation](https://www.researchgate.net/publication/262770174_Keypoint_descriptor_matching_with_context-based_orientation_estimation) (ImaVis 2014)
