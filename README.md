@@ -41,7 +41,8 @@ python ./demo.py <path of 1st image> <path of the 2nd image>
 For further details or customizations please inspect the comments in ``demo.py``.
 
 ## Notes
-The demo uses DoG and [HarrisZ+](https://github.com/fb82/HarrisZ) keypoints and [Blob matching + DTM](https://github.com/fb82/DTM) to compute the matches. In case of OOM issues you can select only one kind of keypoints. By default Blob Matching runs on CPU to avoid OOM, but if you have enough memory you can try on GPU. The demo allows alternatively the usage of the standard MNN.
++ Code is not optimized, especially the matching step can be slow. Increasing the ``max_n`` when computing the all pair distance table in ``sgloh_dist`` speeds up the code, but be careful to OOM issues.
++ The demo uses DoG and [HarrisZ+](https://github.com/fb82/HarrisZ) keypoints and [Blob matching + DTM](https://github.com/fb82/DTM) to compute the matches. In case of OOM issues you can select only one kind of keypoints. By default Blob Matching runs on CPU to avoid OOM, but if you have enough memory you can try on GPU. The demo allows alternatively the usage of the standard MNN.
 
 ## Where can I find more details?
 + [Rethinking the sGLOH descriptor](http://cvg.dsi.unifi.it/pdfs/sGLOH2_TPAMI.pdf) (TPAMI 2018)
