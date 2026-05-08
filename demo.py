@@ -33,8 +33,8 @@ if __name__ == "__main__":
 
     # more keypoint detectors (or just one if you don't have enough memory)
     detectors = {
-        'Hz+',
-        'DoG',
+        'Hz+': 9,  # patch rescaling, -1 for none
+        'DoG': 12, # patch rescaling, -1 for none
         }
 
     # rotation mode is  sGOr2a
@@ -86,16 +86,20 @@ if __name__ == "__main__":
     with torch.no_grad():        
         laf0 = torch.zeros((1, 0, 2, 3), device=device, dtype=torch.float)        
         laf1 = torch.zeros((1, 0, 2, 3), device=device, dtype=torch.float)        
+        scale0 = torch.zeros((0), device=device, dtype=torch.float)
+        scale1 = torch.zeros((0), device=device, dtype=torch.float)
 
         # Hz+
         if 'Hz+' in detectors:
             hz0, _ = hz.hz_plus(hz.load_to_tensor(img[0]).to(torch.float), output_format='laf')
             hz0 = KF.ellipse_to_laf(hz0[None]).to(device).to(torch.float)
             laf0 = torch.concat((laf0, hz0), dim=1)
+            scale0 = torch.concat((scale0, torch.full((hz0.shape[1], ), 1 / detectors['Hz+'], device=device)))
 
             hz1, _ = hz.hz_plus(hz.load_to_tensor(img[1]).to(torch.float), output_format='laf')
             hz1 = KF.ellipse_to_laf(hz1[None]).to(device).to(torch.float)
             laf1 = torch.concat((laf1, hz1), dim=1)
+            scale1 = torch.concat((scale1, torch.full((hz1.shape[1], ), 1 / detectors['Hz+'], device=device)))
 
         # DoG
         if 'DoG' in detectors:        
@@ -103,9 +107,11 @@ if __name__ == "__main__":
 
             dog0 = laf_from_opencv_kpts(dog.detect(cv2.imread(img[0], cv2.IMREAD_GRAYSCALE), None), device=device).to(torch.float)
             laf0 = torch.concat((laf0, dog0), dim=1)
+            scale0 = torch.concat((scale0, torch.full((dog0.shape[1], ), 1 / detectors['DoG'], device=device)))
 
             dog1 = laf_from_opencv_kpts(dog.detect(cv2.imread(img[1], cv2.IMREAD_GRAYSCALE), None), device=device).to(torch.float)
             laf1 = torch.concat((laf1, dog1), dim=1)
+            scale1 = torch.concat((scale1, torch.full((dog1.shape[1], ), 1 / detectors['DoG'], device=device)))
         
         # grayscale image load for sGLOH
         transform = transforms.Compose([
@@ -138,21 +144,25 @@ if __name__ == "__main__":
             laf0 = KF.set_laf_orientation(laf0, torch.zeros((laf0.shape[0], laf0.shape[1], 1), device=device))
             kp0, H0, s0 = sgloh.laf2homo(laf0.squeeze(0))
             # remerge homography and scale
-            Hs0 = H0 * s0.unsqueeze(1).unsqueeze(1)
+            Hs0 = H0
+            scale0[scale0 < 1] = 1 / s0[scale0 < 1]
+            Hs0[:, :2, :] = Hs0[:, :2, :] * (s0 * scale0).unsqueeze(1).unsqueeze(1) 
             patch0 = sgloh.prepare_patch(timg0, kp0, Hs0)
             desc0 = sgloh.sgloh(patch0)
-            # save patches
-            # sgloh.save_patch(patch0, grid=[50, 50], save_prefix='patch0_', save_suffix='.png', normalize=False, stretch=True)
+            # save patches for visualization
+            sgloh.save_patch(patch0, grid=[50, 50], save_prefix='patch0_', save_suffix='.png', normalize=False, stretch=True)
     
             # make upright
             laf1 = KF.set_laf_orientation(laf1, torch.zeros((laf1.shape[0], laf1.shape[1], 1), device=device))        
             kp1, H1, s1 = sgloh.laf2homo(laf1.squeeze(0))
             # remerge homography and scale
-            Hs1 = H1 * s1.unsqueeze(1).unsqueeze(1)
+            Hs1 = H1
+            scale1[scale1 < 1] = 1 / s1[scale1 < 1]
+            Hs1[:, :2, :] = Hs1[:, :2, :] * (s1 * scale1).unsqueeze(1).unsqueeze(1)
             patch1 = sgloh.prepare_patch(timg1, kp1, Hs1)
             desc1 = sgloh.sgloh(patch1)
-            # save patches
-            # sgloh.save_patch(patch1, grid=[50, 50], save_prefix='patch1_', save_suffix='.png', normalize=False, stretch=True)
+            # save patches for visualization
+            sgloh.save_patch(patch1, grid=[50, 50], save_prefix='patch1_', save_suffix='.png', normalize=False, stretch=True)
            
             if 'refine around dominant' in rot_mode:
                 # guess the main orientation and then check for the refined match
