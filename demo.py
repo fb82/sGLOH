@@ -34,8 +34,8 @@ if __name__ == "__main__":
     # more keypoint detectors (or just one if you don't have enough memory)
 	# the value is the scaling factor, in case the images are similar can be put to torch.nan so that 1 patch pixel equals 1 image pixel
     detectors = {
-        'Hz+': torch.nan, # 3.0, 
-        'DoG': torch.nan, # 3.5,
+        'Hz+': 3.0, # torch.nan, # 3.0, 
+        'DoG': 3.0, # torch.nan, # 3.5,
         }
 
     # rotation mode is  sGOr2a
@@ -146,7 +146,7 @@ if __name__ == "__main__":
             kp0, H0, s0 = sgloh.laf2homo(laf0.squeeze(0))
             # remerge homography and scale
             Hs0 = H0
-            scale0[scale0 < 0] = 1 / s0[scale0 < 0]
+            scale0[scale0.isnan()] = 1 / s0[scale0.isnan()]
             Hs0[:, :2, :] = Hs0[:, :2, :] * (s0 * (scale0**2)).unsqueeze(1).unsqueeze(1) 
             patch0 = sgloh.prepare_patch(timg0, kp0, Hs0)
             desc0 = sgloh.sgloh(patch0)
@@ -158,7 +158,7 @@ if __name__ == "__main__":
             kp1, H1, s1 = sgloh.laf2homo(laf1.squeeze(0))
             # remerge homography and scale
             Hs1 = H1
-            scale1[scale1 < 0] = 1 / s1[scale1 < 0]
+            scale1[scale1.isnan()] = 1 / s1[scale1.isnan()]
             Hs1[:, :2, :] = Hs1[:, :2, :] * (s1 * (scale1**2)).unsqueeze(1).unsqueeze(1)
             patch1 = sgloh.prepare_patch(timg1, kp1, Hs1)
             desc1 = sgloh.sgloh(patch1)
