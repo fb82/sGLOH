@@ -19,7 +19,7 @@ def laf2homo(kps):
 
     H = torch.linalg.inv(Hi)
     
-    return c, H, s
+    return c, H, s ** 0.5
 
 
 def get_inverse(pt1, Hs1):

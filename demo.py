@@ -35,7 +35,7 @@ if __name__ == "__main__":
 	# the value is the scaling factor, in case the images are similar can be put to torch.nan so that 1 patch pixel equals 1 image pixel
     detectors = {
         'Hz+': 3.0, # torch.nan, # 3.0, 
-        'DoG': 3.0, # torch.nan, # 3.5,
+        'DoG': 6.0, # torch.nan, # 3.5,
         }
 
     # rotation mode is  sGOr2a
@@ -147,7 +147,10 @@ if __name__ == "__main__":
             # remerge homography and scale
             Hs0 = H0
             scale0[scale0.isnan()] = 1 / s0[scale0.isnan()]
-            Hs0[:, :2, :] = Hs0[:, :2, :] * (s0 * (scale0**2)).unsqueeze(1).unsqueeze(1) 
+            sscale0 = s0 * scale0
+            # allow patch zoom in only
+            sscale0[sscale0 < 1] = 1
+            Hs0[:, :2, :] = Hs0[:, :2, :] * (sscale0**2).unsqueeze(1).unsqueeze(1) 
             patch0 = sgloh.prepare_patch(timg0, kp0, Hs0)
             desc0 = sgloh.sgloh(patch0)
             # save patches for visualization
@@ -159,7 +162,10 @@ if __name__ == "__main__":
             # remerge homography and scale
             Hs1 = H1
             scale1[scale1.isnan()] = 1 / s1[scale1.isnan()]
-            Hs1[:, :2, :] = Hs1[:, :2, :] * (s1 * (scale1**2)).unsqueeze(1).unsqueeze(1)
+            sscale1 = s1 * scale1
+            # allow patch zoom in only
+            sscale1[sscale1 < 1] = 1
+            Hs1[:, :2, :] = Hs1[:, :2, :] * (sscale1**2).unsqueeze(1).unsqueeze(1)
             patch1 = sgloh.prepare_patch(timg1, kp1, Hs1)
             desc1 = sgloh.sgloh(patch1)
             # save patches for visualization
